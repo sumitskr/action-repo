@@ -13,7 +13,7 @@ def github_api():
         print(type(l))
         return l
     else:
-        return "working"
+        return "working sucessfully"
 if __name__== '__main__':
     
     app.run(debug=True)
