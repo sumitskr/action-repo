@@ -11,5 +11,6 @@ def github_api():
         return json.dumps(request.json)
     else:
         return "working"
-
-app.run(debug=True)
+if __name__== '__main__':
+    
+    app.run(debug=True)
