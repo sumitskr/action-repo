@@ -14,7 +14,7 @@ def github_api():
         replaced_data=replaced_data.replace('null','None')
         print("working")
         print(type(replaced_data))
-        print(replaced_data)
+        print(replaced_data['after'])
         return replaced_data
     else:
         return "working"
