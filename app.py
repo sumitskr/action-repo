@@ -13,12 +13,13 @@ def github_api():
     if request.headers['Content-Type'] == 'application/json':
         l = request.json
         print(l)
-        if str(l).find('pull_request')==False and str(l).find('before'):
+        if str(l).find('pull_request')==True and str(l).find('before'):
+            print("its merge")
             return l
-        elif str(l).find('before'):
-            print("merge")
+        elif str(l).find('before') and str(l).find('pull_request')==False:
+            print("push")
             return l
-        elif str(l).find('pull_request'):
+        elif str(l).find('pull_request') and str(l).find('before')==False:
             pull_req_by=l
             request_id = pull_req_by['pull_request']['id']
             author = pull_req_by['pull_request']['user']['login']
