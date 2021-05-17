@@ -1,5 +1,5 @@
 from flask import Flask , json , request
-from datetime import datetime
+import datetime
 
 
 now = datetime.now()
@@ -17,7 +17,8 @@ def github_api():
         l=request.json
         print(l)
         print(type(l))
-        print()
+        x = datetime.datetime.now()
+        print('logger',x)
         return l
 if __name__== '__main__':
     
