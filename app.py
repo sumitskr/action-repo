@@ -5,9 +5,11 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return "sucess"
-@app.route('/github')
+@app.route('/github',methods=['POST'])
 def github_api():
     if request.headers['Content-Type'] =='application/json':
+        print(json.dumps(request.json))
+        print("working")
         return json.dumps(request.json)
     else:
         return "working"
