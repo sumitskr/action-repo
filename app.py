@@ -8,11 +8,11 @@ def index():
 @app.route('/github',methods=['POST'])
 def github_api():
     if request.headers['Content-Type'] =='application/json':
-        print(json.dumps(request.json))
-        print("working")
-        return json.dumps(request.json)
-    else:
-        return "working"
+        l=request.json
+        print(l)
+        print(type(l))
+        print()
+        return l
 if __name__== '__main__':
     
     app.run(debug=True)
