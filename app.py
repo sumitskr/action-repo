@@ -14,6 +14,8 @@ def github_api():
         # replaced_data=replaced_data.replace('null','None')
         # print("working")
         # print(type(replaced_data))
+        print(l)
+        print(type(l))
         return l
     else:
         return "working"
