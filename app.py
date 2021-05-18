@@ -13,13 +13,13 @@ def github_api():
     if request.headers['Content-Type'] == 'application/json':
         l = request.json
         print(l)
-        if str(l).find('pull_request')==True and str(l).find('before'):
+        if str(l).find('pull_request')==True and str(l).find('before')==True:
             print("its merge")
             return l
-        elif str(l).find('before') and str(l).find('pull_request')==False:
+        elif str(l).find('before')==True and str(l).find('pull_request')==False:
             print("push")
             return l
-        elif str(l).find('pull_request') and str(l).find('before')==False:
+        elif str(l).find('pull_request')==True and str(l).find('before')==False:
             pull_req_by=l
             request_id = pull_req_by['pull_request']['id']
             author = pull_req_by['pull_request']['user']['login']
@@ -30,7 +30,7 @@ def github_api():
                      'to_branch': to_branch}
             print(query)
             pull_ob=Pull(request_id,author,action,from_branch,to_branch)
-            pull_ob.commit(pull_ob.__dict__)
+            pull_ob.commit()
 
         return l
 
