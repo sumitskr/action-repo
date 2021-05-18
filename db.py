@@ -2,11 +2,13 @@
 import pymongo
 import datetime
 import pytz
+
 # from wtforms import SubmitField,ValidationError
-myclient = pymongo.MongoClient("mongodb+srv://sumit:sumitsarkar@cluster0.c5xwu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+myclient = pymongo.MongoClient(
+    "mongodb+srv://sumit:sumitsarkar@cluster0.c5xwu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 
 git = myclient.get_database("git")
-activity=git.get_collection('req') #getting collection
+activity = git.get_collection('req')  # getting collection
 
 
 class Pull:
@@ -29,5 +31,6 @@ class Pull:
         dayn = day + suffix
         dayn = dayn + today.strftime(" %b %Y - %I:%M %p ") + 'UTC'
         return dayn
-    def commit(self,query):
-        activity.insert_one(query)
+
+    def commit(self):
+        activity.insert_one(self.__dict__)
