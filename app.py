@@ -32,7 +32,7 @@ def github_api():
             pull_ob=Pull(request_id,author,action,from_branch,to_branch)
             pull_ob.commit()
 
-        return l
+            return l
 
 
 if __name__ == '__main__':
