@@ -1,4 +1,4 @@
-from flask import Flask, json, request,render_template
+from flask import Flask, json, request, render_template
 from db import *
 
 app = Flask(__name__)
@@ -7,7 +7,7 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     activity_list = activity.find()
-    return render_template('index.html',activity_list=activity_list)
+    return render_template('index.html', activity_list=activity_list)
 
 
 @app.route('/github', methods=['POST'])
@@ -15,19 +15,19 @@ def github_api():
     if request.headers['Content-Type'] == 'application/json':
         l = request.json
         print(l)
-        if  str(l).find('pull_request')==-1 and str(l).find('before')!=-1 :
-            request_id=None
-            from_branch=None
+        if str(l).find('pull_request') == -1 and str(l).find('before') != -1:
+            request_id = None
+            from_branch = None
             author = l['pusher']['name']
             to_branch = l['ref']
-            action="PUSH"
+            action = "PUSH"
             query = {'request_id': request_id, 'author': author, 'action': action, 'from_branch': from_branch,
                      'to_branch': to_branch}
             pull_ob = Pull(request_id, author, action, from_branch, to_branch)
             pull_ob.commit()
             print("push action going on")
             return l
-        elif l['action']=='synchronize' and str(l).find('pull_request')!=-1:
+        elif l['action'] == 'synchronize' and str(l).find('pull_request') != -1:
             print("push action going on")
             request_id = None
             from_branch = None
@@ -41,7 +41,7 @@ def github_api():
             print("push action going on")
             print(l)
             return l
-        elif str(l).find('pull_request') != -1 and str(l).find('before') == -1 and l['action']=='opened' :
+        elif str(l).find('pull_request') != -1 and str(l).find('before') == -1 and l['action'] == 'opened':
             pull_req_by = l
             request_id = pull_req_by['pull_request']['id']
             author = pull_req_by['pull_request']['user']['login']
@@ -56,6 +56,7 @@ def github_api():
 
             return l
     return l
+
 
 if __name__ == '__main__':
     app.run(debug=True)
