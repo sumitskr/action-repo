@@ -16,9 +16,9 @@ def github_api():
         l = request.json
         print(l)
         if str(l).find('before') != -1 and str(l).find('pull_request') == -1:
-            print("push")
+            print(l)
             return l
-        elif str(l).find('pull_request') != -1 and str(l).find('before') == -1:
+        elif str(l).find('pull_request') != -1 and str(l).find('before') == -1 and l['action']=='opened' :
             pull_req_by = l
             request_id = pull_req_by['pull_request']['id']
             author = pull_req_by['pull_request']['user']['login']
@@ -32,7 +32,7 @@ def github_api():
             pull_ob.commit()
 
             return l
-
+    return l
 
 if __name__ == '__main__':
     app.run(debug=True)

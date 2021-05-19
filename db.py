@@ -11,6 +11,19 @@ git = myclient.get_database("git")
 activity = git.get_collection('req')  # getting collection
 
 
+def timeStamp():
+    today = datetime.datetime.now(datetime.timezone.utc)
+
+    day = (today.strftime("%d"))
+    if 4 <= int(day) <= 20 or 24 <= int(day) <= 30:
+        suffix = "th"
+    else:
+        suffix = ["st", "nd", "rd"][int(day) % 10 - 1]
+    dayn = day + suffix
+    dayn = dayn + today.strftime(" %b %Y - %I:%M %p ") + 'UTC'
+    return dayn
+
+
 class Pull:
     def __init__(self, request_id, author, action, from_branch, to_branch):
         self.request_id = request_id
@@ -18,19 +31,7 @@ class Pull:
         self.action = action
         self.from_branch = from_branch
         self.to_branch = to_branch
-        self.timestamp = self.timeStamp()
-
-    def timeStamp(self):
-        today = datetime.datetime.now(datetime.timezone.utc)
-
-        day = (today.strftime("%d"))
-        if 4 <= int(day) <= 20 or 24 <= int(day) <= 30:
-            suffix = "th"
-        else:
-            suffix = ["st", "nd", "rd"][int(day) % 10 - 1]
-        dayn = day + suffix
-        dayn = dayn + today.strftime(" %b %Y - %I:%M %p ") + 'UTC'
-        return dayn
+        self.timestamp = timeStamp()
 
     def commit(self):
         activity.insert_one(self.__dict__)
