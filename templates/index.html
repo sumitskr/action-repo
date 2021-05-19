@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+
+
+</head>
+<body>
+    {% for item in activity_list %}
+            {% if item.action == "PULL_REQUEST" %}
+              <li>{{ item.author }} submitted a pull request from {{ item.from_branch }} to {{ to_branch }} on {{ item.timestamp }}</li>
+            {% endif %}
+    {% endfor %}
+
+</body>
+</html>
