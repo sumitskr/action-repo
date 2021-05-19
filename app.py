@@ -15,7 +15,30 @@ def github_api():
     if request.headers['Content-Type'] == 'application/json':
         l = request.json
         print(l)
-        if str(l).find('before') != -1 and str(l).find('pull_request') == -1:
+        if  str(l).find('pull_request')==-1 and str(l).find('before')!=-1 :
+            request_id=None
+            from_branch=None
+            author = l['pusher']['name']
+            to_branch = l['ref']
+            action="PUSH"
+            query = {'request_id': request_id, 'author': author, 'action': action, 'from_branch': from_branch,
+                     'to_branch': to_branch}
+            pull_ob = Pull(request_id, author, action, from_branch, to_branch)
+            pull_ob.commit()
+            print("push action going on")
+            return l
+        elif l['action']=='synchronize' and str(l).find('pull_request')!=-1:
+            print("push action going on")
+            request_id = None
+            from_branch = None
+            author = l['pusher']['name']
+            to_branch = l['ref']
+            action = "PUSH"
+            query = {'request_id': request_id, 'author': author, 'action': action, 'from_branch': from_branch,
+                     'to_branch': to_branch}
+            pull_ob = Pull(request_id, author, action, from_branch, to_branch)
+            pull_ob.commit()
+            print("push action going on")
             print(l)
             return l
         elif str(l).find('pull_request') != -1 and str(l).find('before') == -1 and l['action']=='opened' :
@@ -27,7 +50,7 @@ def github_api():
             to_branch = pull_req_by['pull_request']['base']['label']
             query = {'request_id': request_id, 'author': author, 'action': action, 'from_branch': from_branch,
                      'to_branch': to_branch}
-            print(query)
+            print("pull action going on")
             pull_ob = Pull(request_id, author, action, from_branch, to_branch)
             pull_ob.commit()
 
